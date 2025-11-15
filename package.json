@@ -1,0 +1,150 @@
+{
+  "name": "react-express-ts-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Production-ready React + Express application with TypeScript, best practices, and tooling.",
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "clean": "rimraf dist .turbo node_modules/.cache",
+    "dev": "concurrently -k -n SERVER,CLIENT -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "cross-env NODE_ENV=development tsx watch src/server/index.ts",
+    "dev:client": "vite",
+    "build": "npm run clean && npm run typecheck && npm run build:client && npm run build:server",
+    "build:server": "tsup src/server/index.ts --out-dir dist/server --format cjs --sourcemap --target=node18 --env.NODE_ENV=production",
+    "build:client": "vite build",
+    "start": "cross-env NODE_ENV=production node dist/server/index.js",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings=0",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "security:audit": "npm audit --audit-level=moderate || true"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/compression": "^1.7.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "husky": "^9.1.6",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "supertest": "^7.0.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "node": true,
+      "es2023": true,
+      "jest": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": true,
+      "sourceType": "module",
+      "ecmaVersion": "latest",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": [
+      "react",
+      "react-hooks",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/strict",
+      "prettier"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false
+        }
+      ],
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ]
+    },
+    "ignorePatterns": [
+      "dist",
+      "node_modules"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "plugins": []
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions",
+    "not dead",
+    ">0.5%"
+  ]
+}
