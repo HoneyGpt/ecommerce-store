@@ -1,0 +1,48 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Production-ready Express backend with PostgreSQL, validation, and secure defaults",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon --watch src --ext js,json --signal SIGTERM src/index.js",
+    "start": "node src/index.js",
+    "start:prod": "cross-env NODE_ENV=production node src/index.js",
+    "healthcheck": "node -e \"require('http').get('http://localhost:' + (process.env.PORT||3001) + '/health', r => {process.exit(r.statusCode===200?0:1)}).on('error',()=>process.exit(1))\"",
+    "postinstall": "echo \"Server dependencies installed\""
+  },
+  "dependencies": {
+    "compression": "*",
+    "cors": "*",
+    "dotenv": "*",
+    "envalid": "*",
+    "express": "*",
+    "express-rate-limit": "*",
+    "helmet": "*",
+    "http-errors": "*",
+    "joi": "*",
+    "morgan": "*",
+    "pg": "*",
+    "pino": "*",
+    "pino-http": "*",
+    "celebrate": "*"
+  },
+  "devDependencies": {
+    "cross-env": "*",
+    "nodemon": "*"
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "express",
+    "postgresql",
+    "rest",
+    "api",
+    "production",
+    "security",
+    "validation"
+  ],
+  "license": "MIT"
+}
